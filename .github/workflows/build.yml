@@ -15,9 +15,7 @@ jobs:
         run: xcodebuild -version
 
       - name: Install ldid
-        run: |
-          curl -sL https://github.com/ProcursusTeam/ldid/releases/download/v2.1.5procursus7/ldid_macosx_x86_64 -o /usr/local/bin/ldid
-          chmod +x /usr/local/bin/ldid
+        run: brew install ldid
 
       - name: Build
         run: bash build.sh
