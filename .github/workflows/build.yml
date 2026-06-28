@@ -1,0 +1,41 @@
+name: Build Reductant
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_16.0.app
+
+      - name: Install ldid
+        run: |
+          curl -sL https://github.com/ProcursusTeam/ldid/releases/download/v2.1.5procursus7/ldid_macosx_x86_64 -o /usr/local/bin/ldid
+          chmod +x /usr/local/bin/ldid
+
+      - name: Build
+        run: bash build.sh
+
+      - name: Upload rt_spawn
+        uses: actions/upload-artifact@v4
+        with:
+          name: rt_spawn
+          path: rt_spawn
+
+      - name: Upload rt_hooker
+        uses: actions/upload-artifact@v4
+        with:
+          name: rt_hooker.dylib
+          path: rt_hooker.dylib
+
+      - name: Upload arm64_runner
+        uses: actions/upload-artifact@v4
+        with:
+          name: arm64_runner
+          path: arm64_runner
